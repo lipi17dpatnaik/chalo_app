@@ -1,18 +1,53 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <AppHeader />
+  <div class="app-view">
+  <RoutesView class="split left" @data_submitted="submitData" />
+  <MapsView class="split right" :data="data" />
+   </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import AppHeader from '@/components/AppHeader.vue';
+import RoutesView from '@/views/modules/routes/RoutesView.vue'
+import MapsView from '@/views/modules/MapsView.vue'
 
 @Component({
   components: {
-    HelloWorld,
+    AppHeader,
+    RoutesView,
+    MapsView
   },
 })
-export default class HomeView extends Vue {}
+export default class HomeView extends Vue {
+    
+    private data: any = null;
+    
+    private submitData(data: any) {
+        this.data = data;
+    }
+    
+}
 </script>
+
+<style lang="scss" scoped>
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+/* Control the left side */
+.left {
+  left: 0;
+}
+
+/* Control the right side */
+.right {
+  right: 0;
+  background-color: lightgrey;
+}
+</style>
